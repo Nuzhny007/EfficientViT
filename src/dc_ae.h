@@ -120,7 +120,7 @@ void add_to_seq_stage_main(
 	int input_width
 ) {
 
-	if (std::holds_alternative<std::string>(block_type))		//Если block_type является строкой
+	if (std::holds_alternative<std::string>(block_type))		//Р•СЃР»Рё block_type СЏРІР»СЏРµС‚СЃСЏ СЃС‚СЂРѕРєРѕР№
 	{
 		for (int d = 0; d < depth; d++)
 		{
@@ -134,7 +134,7 @@ void add_to_seq_stage_main(
 				act
 			);
 		}
-	} else if (std::holds_alternative<std::vector<std::string>>(block_type)) {			//Если block_type является вектором строк
+	} else if (std::holds_alternative<std::vector<std::string>>(block_type)) {			//Р•СЃР»Рё block_type СЏРІР»СЏРµС‚СЃСЏ РІРµРєС‚РѕСЂРѕРј СЃС‚СЂРѕРє
 		const auto &block_types = std::get<std::vector<std::string>>(block_type);
 		if (depth != static_cast<int>(block_types.size()))
 			throw std::invalid_argument("add_to_seq_stage_main error: If block_type is a list, its length must be equal to depth.");
@@ -687,54 +687,54 @@ public:
 			std::string modified_name = name;
 			size_t pos = 0;
 			const std::string stages = "stages";
-			//Ищем все вхождения подстроки "stages"
+			//РС‰РµРј РІСЃРµ РІС…РѕР¶РґРµРЅРёСЏ РїРѕРґСЃС‚СЂРѕРєРё "stages"
 			while ((pos = modified_name.find(stages, pos)) != std::string::npos)
 			{
-				//Заменяем на "stages."
+				//Р—Р°РјРµРЅСЏРµРј РЅР° "stages."
 				modified_name.replace(pos, stages.length(), "stages.");
 				pos += stages.length() + 2;
-				//Вставляем подстроку ".op_list"
+				//Р’СЃС‚Р°РІР»СЏРµРј РїРѕРґСЃС‚СЂРѕРєСѓ ".op_list"
 				modified_name.insert(pos, ".op_list");
 			}
 
 			const std::string project_in = "project_in";
 			pos = 0;
-			//Ищем вхождениe подстроки "project_in"
+			//РС‰РµРј РІС…РѕР¶РґРµРЅРёe РїРѕРґСЃС‚СЂРѕРєРё "project_in"
 			if ((pos = modified_name.find(project_in, pos)) != std::string::npos)
 				if (isdigit(modified_name[pos + project_in.length() + 1]))
 				{
-					//И удаляем следующие два символа ".0"
+					//Р СѓРґР°Р»СЏРµРј СЃР»РµРґСѓСЋС‰РёРµ РґРІР° СЃРёРјРІРѕР»Р° ".0"
 					modified_name.replace(pos + project_in.length(), 2, "");
 				}
 
 			const std::string project_out = "project_out";
 			pos = 0;
-			//Ищем вхождениe подстроки "project_out"
+			//РС‰РµРј РІС…РѕР¶РґРµРЅРёe РїРѕРґСЃС‚СЂРѕРєРё "project_out"
 			if ((pos = modified_name.find("encoder", pos)) != std::string::npos)
 				if ((pos = modified_name.find(project_out, pos)) != std::string::npos)
 					if (isdigit(modified_name[pos + project_out.length() + 1]))
 					{
-						//И удаляем следующие два символа ".0"
+						//Р СѓРґР°Р»СЏРµРј СЃР»РµРґСѓСЋС‰РёРµ РґРІР° СЃРёРјРІРѕР»Р° ".0"
 						modified_name.replace(pos + project_out.length(), 2, "");
 					}
 
 			pos = 0;
-			//Ищем вхождениe подстроки "project_out"
+			//РС‰РµРј РІС…РѕР¶РґРµРЅРёe РїРѕРґСЃС‚СЂРѕРєРё "project_out"
 			if ((pos = modified_name.find("decoder", pos)) != std::string::npos)
 				if ((pos = modified_name.find(project_out, pos)) != std::string::npos)
 					if (isdigit(modified_name[pos + project_out.length() + 1]))
 					{
-						//Вставляем подстроку ".op_list"
+						//Р’СЃС‚Р°РІР»СЏРµРј РїРѕРґСЃС‚СЂРѕРєСѓ ".op_list"
 						modified_name.insert(pos + project_out.length(), ".op_list");
 					}
 
 			const std::string main = "main";
 			pos = 0;
-			//Ищем вхождениe подстроки "main"
+			//РС‰РµРј РІС…РѕР¶РґРµРЅРёe РїРѕРґСЃС‚СЂРѕРєРё "main"
 			if ((pos = modified_name.find(main, pos)) != std::string::npos)
 				if (isdigit(modified_name[pos + main.length() + 1]))
 				{
-					//Вставляем подстроку ".op_list"
+					//Р’СЃС‚Р°РІР»СЏРµРј РїРѕРґСЃС‚СЂРѕРєСѓ ".op_list"
 					modified_name.insert(pos+main.length(), ".op_list");
 				}
 			return modified_name;
@@ -746,11 +746,11 @@ public:
 			std::string unmodified_name = name;
 			size_t pos = 0;
 
-			//1.Обработка "stages." и ".op_list"
+			//1.РћР±СЂР°Р±РѕС‚РєР° "stages." Рё ".op_list"
 			const std::string stages = "stages.";
 			while ((pos = unmodified_name.find(stages, pos)) != std::string::npos)
 			{
-				//Заменяем "stages." на "stages"
+				//Р—Р°РјРµРЅСЏРµРј "stages." РЅР° "stages"
 				unmodified_name.replace(pos, stages.length(), "stages");
 			}
 
@@ -758,16 +758,16 @@ public:
 			const std::string oplist = ".op_list";
 			while ((pos = unmodified_name.find(oplist, pos)) != std::string::npos)
 			{
-				//Удаляем ".op_list"
+				//РЈРґР°Р»СЏРµРј ".op_list"
 				unmodified_name.replace(pos, oplist.length(), "");
 			}
 
-			//2.Обработка project_in
+			//2.РћР±СЂР°Р±РѕС‚РєР° project_in
 			const std::string project_in = "project_in";
 			pos = 0;
 			if ((pos = unmodified_name.find(project_in, pos)) != std::string::npos)
 			{
-				//Вставляем ".0" после project_in, если следующая часть не начинается с цифры
+				//Р’СЃС‚Р°РІР»СЏРµРј ".0" РїРѕСЃР»Рµ project_in, РµСЃР»Рё СЃР»РµРґСѓСЋС‰Р°СЏ С‡Р°СЃС‚СЊ РЅРµ РЅР°С‡РёРЅР°РµС‚СЃСЏ СЃ С†РёС„СЂС‹
 				if (pos + project_in.length() < unmodified_name.length() &&
 					!isdigit(unmodified_name[pos + project_in.length()]))
 				{
@@ -775,14 +775,14 @@ public:
 				}
 			}
 
-			//3.Обработка project_out в encoder
+			//3.РћР±СЂР°Р±РѕС‚РєР° project_out РІ encoder
 			const std::string project_out = "project_out";
 			pos = 0;
 			if ((pos = unmodified_name.find("encoder", pos)) != std::string::npos)
 			{
 				if ((pos = unmodified_name.find(project_out, pos)) != std::string::npos)
 				{
-					//Вставляем ".0" после project_out, если следующая часть не начинается с цифры
+					//Р’СЃС‚Р°РІР»СЏРµРј ".0" РїРѕСЃР»Рµ project_out, РµСЃР»Рё СЃР»РµРґСѓСЋС‰Р°СЏ С‡Р°СЃС‚СЊ РЅРµ РЅР°С‡РёРЅР°РµС‚СЃСЏ СЃ С†РёС„СЂС‹
 					if (pos + project_out.length() < unmodified_name.length() &&
 						!isdigit(unmodified_name[pos + project_out.length()]))
 					{
@@ -791,13 +791,13 @@ public:
 				}
 			}
 
-			//4.Обработка project_out в decoder
+			//4.РћР±СЂР°Р±РѕС‚РєР° project_out РІ decoder
 			pos = 0;
 			if ((pos = unmodified_name.find("decoder", pos)) != std::string::npos)
 			{
 				if ((pos = unmodified_name.find(project_out, pos)) != std::string::npos)
 				{
-					//Удаляем ".op_list" после project_out, если есть цифра
+					//РЈРґР°Р»СЏРµРј ".op_list" РїРѕСЃР»Рµ project_out, РµСЃР»Рё РµСЃС‚СЊ С†РёС„СЂР°
 					const std::string decoder_oplist = ".op_list";
 					size_t oplist_pos = pos + project_out.length();
 					if (unmodified_name.substr(oplist_pos, decoder_oplist.length()) == decoder_oplist)
@@ -811,12 +811,12 @@ public:
 				}
 			}
 
-			//5.Обработка main
+			//5.РћР±СЂР°Р±РѕС‚РєР° main
 			pos = 0;
 			const std::string main = "main";
 			if ((pos = unmodified_name.find(main, pos)) != std::string::npos)
 			{
-				// Удаляем ".op_list" после main, если есть цифра
+				// РЈРґР°Р»СЏРµРј ".op_list" РїРѕСЃР»Рµ main, РµСЃР»Рё РµСЃС‚СЊ С†РёС„СЂР°
 				const std::string main_oplist = ".op_list";
 				size_t oplist_pos = pos + main.length();
 				if (unmodified_name.substr(oplist_pos, main_oplist.length()) == main_oplist)
@@ -834,17 +834,17 @@ public:
 
 		if (pretrained_source == "dc-ae")
 		{
-			//Загрузка состояния модели из файла .safetensors
+			//Р—Р°РіСЂСѓР·РєР° СЃРѕСЃС‚РѕСЏРЅРёСЏ РјРѕРґРµР»Рё РёР· С„Р°Р№Р»Р° .safetensors
 			try {
 				torch::NoGradGuard no_grad;
 				//torch::load(model, pretrained_path);
 				std::unordered_map<std::string, torch::Tensor> state_dict = std::move(safetensors::load_safetensors(pretrained_path, device));
 
-				//Загрузка параметров weights & biases
+				//Р—Р°РіСЂСѓР·РєР° РїР°СЂР°РјРµС‚СЂРѕРІ weights & biases
 				for (const auto &param : model->named_parameters())
 				{
 					std::string modified_key = modify_param_name(param.key());
-					if (state_dict.find(modified_key) != state_dict.end())		//!!!Можно написать компаратор
+					if (state_dict.find(modified_key) != state_dict.end())		//!!!РњРѕР¶РЅРѕ РЅР°РїРёСЃР°С‚СЊ РєРѕРјРїР°СЂР°С‚РѕСЂ
 					{
 						if (param.value().sizes() != state_dict.at(modified_key).sizes())
 						{
@@ -857,7 +857,7 @@ public:
 					}
 				}
 
-				//Загрузка буферов running_mean, running_var...
+				//Р—Р°РіСЂСѓР·РєР° Р±СѓС„РµСЂРѕРІ running_mean, running_var...
 				for (const auto& buffer : model->named_buffers())
 				{
 					std::string modified_key = modify_param_name(buffer.key());

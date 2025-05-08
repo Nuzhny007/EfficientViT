@@ -112,7 +112,7 @@ void test()
 	LiteMLA lite_mla(3, 16, 2);
 	if (lite_mla) 
 		std::cout << "lite_mla created." << std::endl;
-	///!!!ÍÅÒ ÈÍÈÖÈÀËÈÇÀÖÈÈ ÂÅÑÎÂ ÏÎÝÒÎÌÓ ÌÓÑÎÐ íà âûõîäå
+	///!!!ÐÐ•Ð¢ Ð˜ÐÐ˜Ð¦Ð˜ÐÐ›Ð˜Ð—ÐÐ¦Ð˜Ð˜ Ð’Ð•Ð¡ÐžÐ’ ÐŸÐžÐ­Ð¢ÐžÐœÐ£ ÐœÐ£Ð¡ÐžÐ  Ð½Ð° Ð²Ñ‹Ñ…Ð¾Ð´Ðµ
 	auto output11 = lite_mla->forward(torch::randn({4, 3, 24, 24}));
 
 	ResidualBlock<torch::nn::Conv2d, torch::nn::Conv2d> residual_block(
@@ -178,7 +178,7 @@ void test()
 		std::cout << "decoder_project_in_block created." << std::endl;
 	//auto output17 = decoder_project_in_block->as<EfficientViTBlockImpl>()->forward(torch::randn({ 16, 32, 24, 24 }/*, device*/));
 
-	//Ïðèìåð èñïîëüçîâàíèÿ Encoder
+	//ÐŸÑ€Ð¸Ð¼ÐµÑ€ Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ð½Ð¸Ñ Encoder
 	EncoderConfig econfig;
 	econfig.in_channels = 3;
 	econfig.latent_channels = 64;
@@ -199,7 +199,7 @@ void test()
 	torch::Tensor output18 = encoder->forward(input);
 	std::cout << "Encoder output:\n" << output18.sizes() << std::endl;
 
-	//Ïðèìåð èñïîëüçîâàíèÿ Decoder
+	//ÐŸÑ€Ð¸Ð¼ÐµÑ€ Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ð½Ð¸Ñ Decoder
 	DecoderConfig dconfig;
 	dconfig.in_channels = 3;
 	dconfig.latent_channels = 64;
@@ -219,7 +219,7 @@ void test()
 	torch::Tensor output19 = decoder->forward(input19);
 	std::cout << "Decoder output:\n" << output19.sizes() << " " << output19.mean() << " " << output19.std() << std::endl;
 
-	//Ïðèìåð èñïîëüçîâàíèÿ DCAE
+	//ÐŸÑ€Ð¸Ð¼ÐµÑ€ Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ð½Ð¸Ñ DCAE
 	DCAEConfig dcae_config;
 	dcae_config.encoder = econfig;
 	dcae_config.decoder = dconfig;
@@ -265,7 +265,7 @@ int main(int argc, const char* argv[])
 		std::string name = "dc-ae-f32c32-in-1.0";
 		std::string pretrained_path = "D:/Delirium/PROJECTS/EfficientViT/DCAE/dc-ae-f32c32-in-1.0model.safetensors";
 		DCAEConfig config = dc_ae_f32c32(name, pretrained_path);
-		//Âûâîä êîíôèãóðàöèè
+		//Ð’Ñ‹Ð²Ð¾Ð´ ÐºÐ¾Ð½Ñ„Ð¸Ð³ÑƒÑ€Ð°Ñ†Ð¸Ð¸
 		std::cout << "Encoder Latent Channels: " << config.encoder.latent_channels << std::endl;
 		std::cout << "Decoder Latent Channels: " << config.decoder.latent_channels << std::endl;
 		std::cout << "Pretrained Path: " << config.pretrained_path << std::endl;

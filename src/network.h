@@ -9,14 +9,14 @@
 #include <optional>
 
 
-///Функция для вычисления padding'а, если передан int
+///Р¤СѓРЅРєС†РёСЏ РґР»СЏ РІС‹С‡РёСЃР»РµРЅРёСЏ padding'Р°, РµСЃР»Рё РїРµСЂРµРґР°РЅ int
 inline int get_same_padding(int kernel_size)
 {
 	assert(kernel_size % 2 > 0 && "kernel size should be odd number");
 	return kernel_size / 2;
 }
 
-///Функция для вычисления padding'а, если передан std::vector<int>
+///Р¤СѓРЅРєС†РёСЏ РґР»СЏ РІС‹С‡РёСЃР»РµРЅРёСЏ padding'Р°, РµСЃР»Рё РїРµСЂРµРґР°РЅ std::vector<int>
 inline std::vector<int> get_same_padding(const std::vector<int> &kernel_sizes)
 {
 	std::vector<int> result;
