@@ -12,6 +12,7 @@ OpenCV(https://opencv.org/releases/),
 Thanks to Carson Poole for this great repository: https://github.com/carsonpo/safetensors.cpp
 
 #### DCAE example:
+![first_result](https://github.com/user-attachments/assets/3b04ff51-e071-418c-acfc-0c2f503c2138)
 
 
 
