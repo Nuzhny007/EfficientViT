@@ -1,2 +1,20 @@
 # EfficientViT
 Unofficial c++ LibTorch implementation of EfficientViT
+
+EfficientViT: Multi-Scale Linear Attention for High-Resolution Dense Prediction.
+Original PyTorch code: https://github.com/mit-han-lab/efficientvit
+Original EfficientViT paper: https://arxiv.org/abs/2205.14756
+
+#### Dependencies: 
+libTorch(https://pytorch.org), 
+OpenCV(https://opencv.org/releases/), 
+
+Thanks to Carson Poole for this great repository: https://github.com/carsonpo/safetensors.cpp
+
+#### DCAE example:
+
+
+
+
+
+
