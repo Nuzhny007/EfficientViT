@@ -254,6 +254,22 @@ inline cv::Mat TorchTensorToCVMat(const torch::Tensor tensor_image, const bool p
 
 int main(int argc, const char* argv[])
 {
+	const char* keys =
+	{
+		"{ img   |img1.jpg                                   | Image | }"
+		"{ vit   |data/dc-ae-f32c32-in-1.0/model.safetensors | Path to EfficientVIT model | }"
+		"{ name  |dc-ae-f32c32-in-1.0                        | Name | }"
+		"{ show  |1                                          | Show result | }"
+	};
+
+	cv::CommandLineParser parser(argc, argv, keys);
+	parser.printMessage();
+
+	std::string imagePath = parser.get<std::string>("img");
+	std::string pathToVit = parser.get<std::string>("vit");
+	std::string name = parser.get<std::string>("name");
+	bool showResult = parser.get<int>("show") != 0;
+
 	torch::manual_seed(42);
 
 	//test();
@@ -262,9 +278,7 @@ int main(int argc, const char* argv[])
 		register_activation_functions();
 		register_norms();
 		torch::Device device = torch::kCUDA;
-		std::string name = "dc-ae-f32c32-in-1.0";
-		std::string pretrained_path = "D:/Delirium/PROJECTS/EfficientViT/DCAE/dc-ae-f32c32-in-1.0model.safetensors";
-		DCAEConfig config = dc_ae_f32c32(name, pretrained_path);
+		DCAEConfig config = dc_ae_f32c32(name, pathToVit);
 		//Вывод конфигурации
 		std::cout << "Encoder Latent Channels: " << config.encoder.latent_channels << std::endl;
 		std::cout << "Decoder Latent Channels: " << config.decoder.latent_channels << std::endl;
@@ -274,7 +288,12 @@ int main(int argc, const char* argv[])
 		dcae->to(device);
 
 
-		cv::Mat img = cv::imread("../data/2.jpg", cv::IMREAD_COLOR);
+		cv::Mat img = cv::imread(imagePath, cv::IMREAD_COLOR);
+		if (img.empty())
+		{
+			std::cerr << "Can't read " << imagePath << std::endl;
+			return -1;
+		}
 		cv::resize(img, img, cv::Size(1024, 1024));
 		torch::Tensor input = CVMatToTorchTensor(img);
 		//torch::Tensor input = torch::randn({ 1, 3, 128, 128 });
@@ -286,11 +305,15 @@ int main(int argc, const char* argv[])
 		auto img_out = TorchTensorToCVMat(out);
 		cv::resize(img, img, cv::Size(512, 512));
 		cv::resize(img_out, img_out, cv::Size(512, 512));
-		cv::imshow("img", img);
-		cv::imshow("img_out", img_out);
+		if (showResult)
+		{
+			cv::imshow("img", img);
+			cv::imshow("img_out", img_out);
+		}
 		cv::imwrite("img_out.jpg", img_out);
 		cv::imwrite("input_out.jpg", TorchTensorToCVMat(input));
-		cv::waitKey(0);
+		if (showResult)
+			cv::waitKey(0);
 
 	} catch (const std::exception& e) {
 		std::cerr << "Error: " << e.what() << std::endl;

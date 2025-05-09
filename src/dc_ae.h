@@ -557,7 +557,7 @@ public:
 			cfg.in_shortcut
 		);
 
-		for (int stage_id = NumStages - 1; stage_id >= 0; stage_id--)
+		for (int stage_id = static_cast<int>(NumStages) - 1; stage_id >= 0; stage_id--)
 		{
 			int width = cfg.width_list[stage_id];
 			int depth = cfg.depth_list[stage_id];
@@ -616,7 +616,7 @@ public:
 
 		register_module("project_in", ProjectIn);		
 		//for (size_t i = 0; i < stages_.size(); i++)
-		for (int i = NumStages - 1; i >= 0; i--)
+		for (int i = static_cast<int>(NumStages) - 1; i >= 0; i--)
 		{
 			register_module("stages" + std::to_string(i), stages_[i]);
 		}
