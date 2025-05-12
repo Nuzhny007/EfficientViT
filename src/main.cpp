@@ -287,14 +287,14 @@ int main(int argc, const char* argv[])
 		dcae->eval();
 		dcae->to(device);
 
-
 		cv::Mat img = cv::imread(imagePath, cv::IMREAD_COLOR);
 		if (img.empty())
 		{
 			std::cerr << "Can't read " << imagePath << std::endl;
 			return -1;
 		}
-		cv::resize(img, img, cv::Size(1024, 1024));
+		cv::resize(img, img, cv::Size(512, 512));
+
 		torch::Tensor input = CVMatToTorchTensor(img);
 		//torch::Tensor input = torch::randn({ 1, 3, 128, 128 });
 		std::cout << "input: " << input.sizes() << " " << input.mean() << " " << input.std() << std::endl;
@@ -303,8 +303,7 @@ int main(int argc, const char* argv[])
 		auto out = dcae->decode(latent)/ config.scaling_factor.value();
 		std::cout << "out: " << out.sizes() << " " << out.mean() << " " << out.std() << std::endl;
 		auto img_out = TorchTensorToCVMat(out);
-		cv::resize(img, img, cv::Size(512, 512));
-		cv::resize(img_out, img_out, cv::Size(512, 512));
+
 		if (showResult)
 		{
 			cv::imshow("img", img);
